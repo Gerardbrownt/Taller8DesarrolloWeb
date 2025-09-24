@@ -1,0 +1,36 @@
+<aside class="flex-shrink-0 p-3 bg-body-tertiary border-end sidebar">
+  <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+    <span class="fs-5 fw-semibold">{{ brand() }}</span>
+  </a>
+
+  <hr>
+
+  <ul class="nav nav-pills flex-column mb-auto gap-1">
+    @for (item of mainNav; track item.label) {
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="item.active" (click)="activate(item)">
+          {{ item.label }}
+        </a>
+      </li>
+    }
+  </ul>
+
+  <hr>
+
+  <p class="text-uppercase small text-secondary mb-2">Saved reports</p>
+  <ul class="list-unstyled ps-0">
+    @for (r of savedReports; track r) {
+      <li class="mb-1">
+        <a class="link-body-emphasis text-decoration-none">{{ r }}</a>
+      </li>
+    }
+  </ul>
+
+  <hr>
+
+  <ul class="nav flex-column gap-1">
+    @for (i of accountNav; track i) {
+      <li><a class="nav-link">{{ i }}</a></li>
+    }
+  </ul>
+</aside>
