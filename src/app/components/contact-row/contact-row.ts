@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Contact } from '../contact-list/contact-list';
+import { Contact } from '../../../models/contact'; // 👈 ruta correcta
 
 @Component({
-  selector: 'tr[app-contact-row]',     
+  selector: 'tr[app-contact-row]',
   standalone: true,
   template: `
     <td>{{ contact.id }}</td>

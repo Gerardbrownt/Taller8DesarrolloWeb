@@ -1,25 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContactRow } from "../contact-row/contact-row";
+import { ContactRow } from '../contact-row/contact-row';
+import { Contact } from '../../../models/contact';
+import { ContactService } from '../../../services/contact.service';
 
 @Component({
   selector: 'app-contact-list',
-  standalone: true,                 
+  standalone: true,
   imports: [CommonModule, ContactRow],
   templateUrl: './contact-list.html',
-  styleUrls: ['./contact-list.css'] 
+  styleUrls: ['./contact-list.css']
 })
-export class ContactList {
-  contacts: Contact[] = [
-    { id: 1, name: 'Maria Lopez', email: 'maria.lopez@example.com' },
-    { id: 2, name: 'Carlos Ruiz', email: 'carlos.ruiz@example.com' },
-    { id: 3, name: 'Ana Gomez', email: 'ana.gomez@example.com' },
-    { id: 4, name: 'Luis Fernandez', email: 'luis.fernandez@example.com' }
-  ];
-}
+export class ContactList implements OnInit {
+  contacts = signal<Contact[]>([]);
+  loading = signal(true);
+  error = signal<string | null>(null);
 
-export interface Contact {
-  id: number;
-  name: string;
-  email: string;
+  constructor(private contactService: ContactService) {}
+
+  ngOnInit(): void {
+    this.contactService.getContacts().subscribe({
+      next: (data) => {
+        this.contacts.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error(err);
+        this.error.set('No se pudieron cargar los contactos.');
+        this.loading.set(false);
+      }
+    });
+  }
 }
