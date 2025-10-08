@@ -5,7 +5,8 @@ import { Contact } from '../models/contact';
 
 @Injectable({ providedIn: 'root' })
 export class ContactService {
-  private readonly url = '/data/contacts.json'; // sale de public/data/
+
+  private readonly url = 'https://raw.githubusercontent.com/Gerardbrownt/Taller8DesarrolloWeb/refs/heads/main/public/data/contacts.json';
 
   constructor(private http: HttpClient) {}
 
